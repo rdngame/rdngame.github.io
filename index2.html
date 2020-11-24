@@ -1,0 +1,226 @@
+<html><head>
+    <meta charset="utf-8">
+    <title>Online HTML Editor - ContentBuilder.js</title>
+    <meta name="description" content="An online HTML editor Javascript library for CMS or web applications.">
+    <meta name="keywords" content="HTML5 editor, HTML editor, Javascript Library, Content Builder, ContentBuilder.js, JQuery plugin, CMS, Content Management System, Web Editor">
+    <meta name="ROBOTS" content="FOLLOW, INDEX">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="#"> 
+    <link href="http://www.online-html-editor.org/assets/minimalist-blocks/content.css" rel="stylesheet" type="text/css">
+    <link href="http://www.online-html-editor.org/contentbuilder/contentbuilder.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            font-size:16px;
+        }
+        p, td, li, label {
+            font-size: 16px;
+            line-height: 2;
+            font-weight: 300;
+        }
+        .container {  margin: 150px auto; max-width: 800px; width:100%; padding:0 35px; box-sizing: border-box;}
+        .info { position: fixed;top: 8px;left: 12px;margin: 0;font-weight: 300;font-size: 14px;color: #999;}
+    </style>
+<style type="text/css">.rCSoh6iy8 {
+	position: fixed;
+	width: 0;
+	height: 0;
+	left: 0;
+	top: 0;
+	z-index: 3000;
+}.rCSoh6iy8 .moveable-control-box{
+    z-index: 0;
+}.rCSoh6iy8 .moveable-line, .rCSoh6iy8 .moveable-control{
+	left: 0;
+	top: 0;
+}.rCSoh6iy8 .moveable-control{
+	position: absolute;
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	border: 2px solid #fff;
+	box-sizing: border-box;
+	background: #4af;
+	margin-top: -7px;
+    margin-left: -7px;
+    z-index: 10;
+    will-change: transform;
+}.rCSoh6iy8 .moveable-line{
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	background: #4af;
+	transform-origin: 0px 0.5px;
+}.rCSoh6iy8 .moveable-line.moveable-dashed{
+    box-sizing: border-box;
+    background: transparent;
+}.rCSoh6iy8 .moveable-line.moveable-dashed.moveable-horizontal{
+    border-top: 1px dashed #4af;
+}.rCSoh6iy8 .moveable-line.moveable-dashed.moveable-vertical{
+    border-left: 1px dashed #4af;
+}.rCSoh6iy8 .moveable-line.moveable-rotation-line{
+	height: 40px;
+	width: 1px;
+	transform-origin: 0.5px 39.5px;
+}.rCSoh6iy8 .moveable-line.moveable-rotation-line .moveable-control{
+	border-color: #4af;
+	background:#fff;
+	cursor: alias;
+}.rCSoh6iy8 .moveable-line.moveable-vertical{
+    transform: translateX(-50%);
+}.rCSoh6iy8 .moveable-line.moveable-horizontal{
+    transform: translateY(-50%);
+}.rCSoh6iy8 .moveable-line.moveable-vertical.moveable-bold{
+    width: 2px;
+}.rCSoh6iy8 .moveable-line.moveable-horizontal.moveable-bold{
+    height: 2px;
+}.rCSoh6iy8 .moveable-control.moveable-origin{
+	border-color: #f55;
+	background: #fff;
+	width: 12px;
+	height: 12px;
+	margin-top: -6px;
+	margin-left: -6px;
+	pointer-events: none;
+}.rCSoh6iy8 .moveable-direction[data-rotation="0"]{
+	cursor:ns-resize;cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(0deg);transform-origin: 16px 16px"></path></svg>') 16 16, ns-resize;cursor: -webkit-image-set(url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(0deg);transform-origin: 16px 16px"></path></svg>') 1x, url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64px" height="64px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(0deg);transform-origin: 16px 16px"></path></svg>') 2x) 16 16, ns-resize;
+}.rCSoh6iy8 .moveable-direction[data-rotation="15"]{
+	cursor:ns-resize;cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(15deg);transform-origin: 16px 16px"></path></svg>') 16 16, ns-resize;cursor: -webkit-image-set(url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(15deg);transform-origin: 16px 16px"></path></svg>') 1x, url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64px" height="64px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(15deg);transform-origin: 16px 16px"></path></svg>') 2x) 16 16, ns-resize;
+}.rCSoh6iy8 .moveable-direction[data-rotation="30"]{
+	cursor:nesw-resize;cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(30deg);transform-origin: 16px 16px"></path></svg>') 16 16, nesw-resize;cursor: -webkit-image-set(url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(30deg);transform-origin: 16px 16px"></path></svg>') 1x, url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64px" height="64px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(30deg);transform-origin: 16px 16px"></path></svg>') 2x) 16 16, nesw-resize;
+}.rCSoh6iy8 .moveable-direction[data-rotation="45"]{
+	cursor:nesw-resize;cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(45deg);transform-origin: 16px 16px"></path></svg>') 16 16, nesw-resize;cursor: -webkit-image-set(url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(45deg);transform-origin: 16px 16px"></path></svg>') 1x, url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64px" height="64px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(45deg);transform-origin: 16px 16px"></path></svg>') 2x) 16 16, nesw-resize;
+}.rCSoh6iy8 .moveable-direction[data-rotation="60"]{
+	cursor:nesw-resize;cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(60deg);transform-origin: 16px 16px"></path></svg>') 16 16, nesw-resize;cursor: -webkit-image-set(url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(60deg);transform-origin: 16px 16px"></path></svg>') 1x, url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64px" height="64px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(60deg);transform-origin: 16px 16px"></path></svg>') 2x) 16 16, nesw-resize;
+}.rCSoh6iy8 .moveable-direction[data-rotation="75"]{
+	cursor:ew-resize;cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(75deg);transform-origin: 16px 16px"></path></svg>') 16 16, ew-resize;cursor: -webkit-image-set(url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(75deg);transform-origin: 16px 16px"></path></svg>') 1x, url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64px" height="64px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(75deg);transform-origin: 16px 16px"></path></svg>') 2x) 16 16, ew-resize;
+}.rCSoh6iy8 .moveable-direction[data-rotation="90"]{
+	cursor:ew-resize;cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(90deg);transform-origin: 16px 16px"></path></svg>') 16 16, ew-resize;cursor: -webkit-image-set(url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(90deg);transform-origin: 16px 16px"></path></svg>') 1x, url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64px" height="64px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(90deg);transform-origin: 16px 16px"></path></svg>') 2x) 16 16, ew-resize;
+}.rCSoh6iy8 .moveable-direction[data-rotation="105"]{
+	cursor:ew-resize;cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(105deg);transform-origin: 16px 16px"></path></svg>') 16 16, ew-resize;cursor: -webkit-image-set(url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(105deg);transform-origin: 16px 16px"></path></svg>') 1x, url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64px" height="64px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(105deg);transform-origin: 16px 16px"></path></svg>') 2x) 16 16, ew-resize;
+}.rCSoh6iy8 .moveable-direction[data-rotation="120"]{
+	cursor:nwse-resize;cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(120deg);transform-origin: 16px 16px"></path></svg>') 16 16, nwse-resize;cursor: -webkit-image-set(url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(120deg);transform-origin: 16px 16px"></path></svg>') 1x, url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64px" height="64px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(120deg);transform-origin: 16px 16px"></path></svg>') 2x) 16 16, nwse-resize;
+}.rCSoh6iy8 .moveable-direction[data-rotation="135"]{
+	cursor:nwse-resize;cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(135deg);transform-origin: 16px 16px"></path></svg>') 16 16, nwse-resize;cursor: -webkit-image-set(url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(135deg);transform-origin: 16px 16px"></path></svg>') 1x, url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64px" height="64px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(135deg);transform-origin: 16px 16px"></path></svg>') 2x) 16 16, nwse-resize;
+}.rCSoh6iy8 .moveable-direction[data-rotation="150"]{
+	cursor:nwse-resize;cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(150deg);transform-origin: 16px 16px"></path></svg>') 16 16, nwse-resize;cursor: -webkit-image-set(url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(150deg);transform-origin: 16px 16px"></path></svg>') 1x, url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64px" height="64px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(150deg);transform-origin: 16px 16px"></path></svg>') 2x) 16 16, nwse-resize;
+}.rCSoh6iy8 .moveable-direction[data-rotation="165"]{
+	cursor:ns-resize;cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(165deg);transform-origin: 16px 16px"></path></svg>') 16 16, ns-resize;cursor: -webkit-image-set(url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(165deg);transform-origin: 16px 16px"></path></svg>') 1x, url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64px" height="64px" viewBox="0 0 32 32" ><path d="M 16,5 L 12,10 L 14.5,10 L 14.5,22 L 12,22 L 16,27 L 20,22 L 17.5,22 L 17.5,10 L 20, 10 L 16,5 Z" stroke-linejoin="round" stroke-width="1.2" fill="black" stroke="white" style="transform:rotate(165deg);transform-origin: 16px 16px"></path></svg>') 2x) 16 16, ns-resize;
+}.rCSoh6iy8 .moveable-group{
+    z-index: -1;
+}.rCSoh6iy8 .moveable-area{
+    position: absolute;
+}.rCSoh6iy8 .moveable-area-pieces{
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+}.rCSoh6iy8 .moveable-area.moveable-avoid{
+    pointer-events: none;
+}.rCSoh6iy8 .moveable-area.moveable-avoid+.moveable-area-pieces{
+    display: block;
+}.rCSoh6iy8 .moveable-area-piece{
+    position: absolute;
+}
+
+</style><style>.size-control {cursor:pointer;background:#ddd;border-left:#fff 2px solid;border-right:#fff 2px solid;height:100%;display:flex;justify-content:center;}.size-control-info {text-align:center;color:#000;}</style></head>
+<body><div class="info">
+    This is an online demo of <a href="https://innovastudio.com/content-builder.aspx">ContentBuilder.js</a>
+</div>
+
+<!-- This is just a sample content. Content can be loaded from a database. -->
+<div class="container is-builder" data-sort="true" style="">
+    <div class="row clearfix" style="">
+        <div class="column full" contenteditable="true" data-click="true">
+            <h2 class="size-48" style="font-weight: 800; text-align: center; letter-spacing: 8px; text-transform: uppercase;">parfum kasturi</h2>
+        </div>
+    <div class="is-tool is-row-tool">
+                <div title="Move" class="row-handle" style="width:100%;cursor:move;text-align:center;" data-title="Move"><svg class="is-icon-flex"><use xlink:href="#ion-move"></use></svg></div>
+                <button title="More" class="row-more" data-title="More"><svg class="is-icon-flex"><use xlink:href="#ion-more"></use></svg></button>
+                <button title="Grid Editor" class="row-grideditor" data-title="Grid Editor"><svg class="is-icon-flex"><use xlink:href="#ion-grid"></use></svg></button>
+                <button title="Delete" class="row-remove" data-title="Delete"><svg class="is-icon-flex"><use xlink:href="#ion-ios-close-empty"></use></svg></button>
+            </div><div class="is-rowadd-tool" style="height:0">
+                <button title="Add" style="outline:none;line-height:1;margin:0;padding:0;cursor:pointer;background-color:rgba(255,255,255,0.9);" data-title="Add"><svg class="is-icon-flex" style="fill:rgba(0, 0, 0, 0.8);width:17px;height:17px;"><use xlink:href="#ion-ios-plus-empty"></use></svg></button>
+            </div></div>
+    
+    
+    
+<div class="row clearfix"><div class="column half" contenteditable="true" data-click="true"><div class="is-card is-card-circle is-light-text" style="width:50px;height:50px;padding:5px;background:#07d2c0;margin:0">
+	<div class="is-card-content-centered">
+		<i class="icon ion-code size-24"></i>
+	</div>
+</div>
+<h3 class="size-21" style="letter-spacing:1px;margin-top:20px">Feature One</h3>
+<p style="border-bottom: 2px solid #07d2c0; width: 40px; display: inline-block; margin: 0"></p>
+<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p></div><div class="column half" contenteditable="true" data-click="true"><div class="is-card is-card-circle is-light-text" style="width:50px;height:50px;padding:5px;background:#07d2c0;margin:0">
+	<div class="is-card-content-centered">
+		<i class="icon ion-code size-24"></i>
+	</div>
+</div>
+<h3 class="size-21" style="letter-spacing:1px;margin-top:20px">Feature Two</h3>
+<p style="border-bottom: 2px solid #07d2c0; width: 40px; display: inline-block; margin: 0"></p>
+<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p></div><div class="is-tool is-row-tool">
+                <div title="Move" class="row-handle" style="width:100%;cursor:move;text-align:center;" data-title="Move"><svg class="is-icon-flex"><use xlink:href="#ion-move"></use></svg></div>
+                <button title="More" class="row-more" data-title="More"><svg class="is-icon-flex"><use xlink:href="#ion-more"></use></svg></button>
+                <button title="Grid Editor" class="row-grideditor" data-title="Grid Editor"><svg class="is-icon-flex"><use xlink:href="#ion-grid"></use></svg></button>
+                <button title="Delete" class="row-remove" data-title="Delete"><svg class="is-icon-flex"><use xlink:href="#ion-ios-close-empty"></use></svg></button>
+            </div><div class="is-rowadd-tool" style="height:0">
+                <button title="Add" style="outline:none;line-height:1;margin:0;padding:0;cursor:pointer;background-color:rgba(255,255,255,0.9);" data-title="Add"><svg class="is-icon-flex" style="fill:rgba(0, 0, 0, 0.8);width:17px;height:17px;"><use xlink:href="#ion-ios-plus-empty"></use></svg></button>
+            </div></div><div class="row clearfix"><div class="column full" data-click="true"><div class="spacer height-20" contenteditable="false"></div></div><div class="is-tool is-row-tool">
+                <div title="Move" class="row-handle" style="width:100%;cursor:move;text-align:center;" data-title="Move"><svg class="is-icon-flex"><use xlink:href="#ion-move"></use></svg></div>
+                <button title="More" class="row-more" data-title="More"><svg class="is-icon-flex"><use xlink:href="#ion-more"></use></svg></button>
+                <button title="Grid Editor" class="row-grideditor" data-title="Grid Editor"><svg class="is-icon-flex"><use xlink:href="#ion-grid"></use></svg></button>
+                <button title="Delete" class="row-remove" data-title="Delete"><svg class="is-icon-flex"><use xlink:href="#ion-ios-close-empty"></use></svg></button>
+            </div><div class="is-rowadd-tool" style="height:0">
+                <button title="Add" style="outline:none;line-height:1;margin:0;padding:0;cursor:pointer;background-color:rgba(255,255,255,0.9);" data-title="Add"><svg class="is-icon-flex" style="fill:rgba(0, 0, 0, 0.8);width:17px;height:17px;"><use xlink:href="#ion-ios-plus-empty"></use></svg></button>
+            </div></div><div class="row clearfix"><div class="column half" contenteditable="true" data-click="true"><div class="is-card is-card-circle is-light-text" style="width:50px;height:50px;padding:5px;background:#07d2c0;margin:0">
+	<div class="is-card-content-centered">
+		<i class="icon ion-code size-24"></i>
+	</div>
+</div>
+<h3 class="size-21" style="letter-spacing:1px;margin-top:20px">Feature Three</h3>
+<p style="border-bottom: 2px solid #07d2c0; width: 40px; display: inline-block; margin: 0"></p>
+<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p></div><div class="column half" contenteditable="true" data-click="true"><div class="is-card is-card-circle is-light-text" style="width:50px;height:50px;padding:5px;background:#07d2c0;margin:0">
+	<div class="is-card-content-centered">
+		<i class="icon ion-code size-24"></i>
+	</div>
+</div>
+<h3 class="size-21" style="letter-spacing:1px;margin-top:20px">Feature Four</h3>
+<p style="border-bottom: 2px solid #07d2c0; width: 40px; display: inline-block; margin: 0"></p>
+<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p></div><div class="is-tool is-row-tool">
+                <div title="Move" class="row-handle" style="width:100%;cursor:move;text-align:center;" data-title="Move"><svg class="is-icon-flex"><use xlink:href="#ion-move"></use></svg></div>
+                <button title="More" class="row-more" data-title="More"><svg class="is-icon-flex"><use xlink:href="#ion-more"></use></svg></button>
+                <button title="Grid Editor" class="row-grideditor" data-title="Grid Editor"><svg class="is-icon-flex"><use xlink:href="#ion-grid"></use></svg></button>
+                <button title="Delete" class="row-remove" data-title="Delete"><svg class="is-icon-flex"><use xlink:href="#ion-ios-close-empty"></use></svg></button>
+            </div><div class="is-rowadd-tool" style="height:0">
+                <button title="Add" style="outline:none;line-height:1;margin:0;padding:0;cursor:pointer;background-color:rgba(255,255,255,0.9);" data-title="Add"><svg class="is-icon-flex" style="fill:rgba(0, 0, 0, 0.8);width:17px;height:17px;"><use xlink:href="#ion-ios-plus-empty"></use></svg></button>
+            </div></div><div class="row clearfix" style=""><div class="column half" data-click="true"><img src="assets/minimalist-blocks/images/adam-birkett-6cxznfcd2kq-unsplash-lqmrN1.jpg" alt=""></div><div class="column half" contenteditable="true" data-click="true"><h2 style="letter-spacing: 1px;">Parfum ibadah kasturi</h2>
+<p class="size-24" style="font-weight: bold;">Rp 70.000</p>
+<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+<ul style="list-style: initial;padding-left: 20px;">
+	<li>Lorem Ipsum is simply dummy text</li>
+	<li>Lorem Ipsum is simply dummy text</li>
+	<li>Lorem Ipsum is simply dummy text</li>
+</ul>
+<p class="size-14">Color Availability: White, Black</p>
+<div><span contenteditable="false"><a href="#" class="is-btn" style="margin: 3px 0px; display: inline-block; text-decoration: none; transition: all 0.16s ease 0s; border-style: solid; cursor: pointer; background-color: rgb(220, 220, 220); color: rgb(0, 0, 0); border-color: rgb(220, 220, 220); border-width: 2px; border-radius: 0px; padding: 10px 22px; line-height: 1.5; text-transform: uppercase; font-weight: 400; font-size: 12px; letter-spacing: 3px;" title="" contenteditable="true">Add to Cart</a></span> &nbsp; <span contenteditable="false"><a href="#" class="is-btn is-btn-ghost1 is-upper is-btn-small" style="padding: 10px 22px; font-size: 12px; line-height: 1.5;" contenteditable="true">Buy Now</a></span></div><div class="spacer height-20" contenteditable="false"></div>
+<p class="size-14" style="margin-bottom: 5px;">Share:</p>
+<div class="is-social" contenteditable="false">
+	<a href="https://twitter.com/home?status=https://example.com/"><i class="icon ion-social-twitter size-14" style="margin-right: 2px;"></i></a>
+	<a href="https://www.facebook.com/sharer/sharer.php?u=https://example.com/"><i class="icon ion-social-facebook size-14" style="margin-right: 2px;"></i></a>
+	<a href="https://pinterest.com/pin/create/button/?url=https://example.com/&amp;media=&amp;description="><i class="icon ion-social-pinterest-outline size-14"></i></a>
+</div></div><div class="is-tool is-row-tool">
+                <div title="Move" class="row-handle" style="width:100%;cursor:move;text-align:center;" data-title="Move"><svg class="is-icon-flex"><use xlink:href="#ion-move"></use></svg></div>
+                <button title="More" class="row-more" data-title="More"><svg class="is-icon-flex"><use xlink:href="#ion-more"></use></svg></button>
+                <button title="Grid Editor" class="row-grideditor" data-title="Grid Editor"><svg class="is-icon-flex"><use xlink:href="#ion-grid"></use></svg></button>
+                <button title="Delete" class="row-remove" data-title="Delete"><svg class="is-icon-flex"><use xlink:href="#ion-ios-close-empty"></use></svg></button>
+            </div><div class="is-rowadd-tool" style="height:0">
+                <button title="Add" style="outline:none;line-height:1;margin:0;padding:0;cursor:pointer;background-color:rgba(255,255,255,0.9);" data-title="Add"><svg class="is-icon-flex" style="fill:rgba(0, 0, 0, 0.8);width:17px;height:17px;"><use xlink:href="#ion-ios-plus-empty"></use></svg></button>
+            </div></div></div>
+
+
+ 
+
+
+
+
+</body></html>
